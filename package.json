@@ -1,22 +1,31 @@
 {
-  "name": "hello-react",
+  "name": "TODOList",
   "version": "1.0.0",
-  "description": "Simple React Hello World",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "browserify -t babelify --outfile public/generated-app.js src/hello.jsx && echo 'Open http://localhost:8000/ in your browser' && (cd public ; python -m SimpleHTTPServer)",
-    "watch": "watchify -v -t babelify --outfile public/generated-app.js src/hello.jsx"
+    "start": "webpack-dev-server --port 5000",
+    "build": "webpack"
   },
-  "author": "",
+  "keywords": [],
+  "author": "Tara S",
   "license": "ISC",
-  "repository": "none",
   "devDependencies": {
-    "babelify": "^6.3.0",
-    "browserify": "^11.2.0",
-    "watchify": "^3.4.0"
+    "@reach/router": "^1.2.1",
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.1",
+    "style-loader": "^0.23.1",
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-redux": "^5.1.1",
+    "redux": "^4.0.1"
   }
 }
