@@ -1,12 +1,23 @@
 import React from 'react';
 import { Link, Router } from "@reach/router";
 export default class createTask extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
         tasks: {}
     }
-    };
+    this.addTask = this.addTask.bind(this);
+    }
+
+    addTask(){
+    
+        var newTask = this.state.tasks;
+        newTask.name =this.refs.taskName.value;
+        newTask.desc = this.refs.taskDesc.value;
+        this.setState({ tasks : newTask});
+
+console.log(" new task is " , JSON.stringify(this.state.tasks));
+    }
 
 //     buttonClick = () => {
 //         var browserHistory = Router.browserHistory; 
@@ -23,13 +34,13 @@ export default class createTask extends React.Component {
                 <div className="form-group">
                     <label className="control-label col-sm-2">Task Name:</label>
                     <div className="col-sm-10">
-                        <input type="name" className="form-control" id="name" placeholder="Task Name"></input>
+                        <input type="name" className="form-control" ref="taskName" id="name" placeholder="Task Name"></input>
                     </div>
                 </div>
                 <div className="form-group">
                     <label className="control-label col-sm-2" >Task Description:</label>
                     <div className="col-sm-10">
-                        <input type="name" className="form-control" id="desc" placeholder="Task Description"></input>
+                        <input type="name" className="form-control" ref="taskDesc" id="desc" placeholder="Task Description"></input>
                     </div>
                 </div>
                 <div className="form-group">
@@ -41,7 +52,7 @@ export default class createTask extends React.Component {
                 </div>
                 <div className="form-group">
                     <div className="col-sm-offset-2 col-sm-10">
-                        <button type="submit" className="btn btn-default" onClick={this.buttonClick}>Create</button>
+                        <button type="submit" className="btn btn-default" onClick={this.addTask}>Create</button>
                     </div>
                 </div>
             </form>)

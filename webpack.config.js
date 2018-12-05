@@ -2,13 +2,14 @@ var path = require('path');
 var webpack = require('webpack');
 module.exports = {
     context: path.resolve('js'),
+    devtool: 'inline-source-map',
     entry:{
         "bundle":'./app',
         "bundle.min":'./app'
     },
     output:{
         path: path.resolve('build/js'),
-        publicPath: 'public/js',
+         publicPath: 'public/js',
         filename:'[name].js'
     },
     devServer:{
@@ -17,7 +18,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('production')
+                NODE_ENV: JSON.stringify('development')
             }
         }),
         new webpack.optimize.UglifyJsPlugin({
