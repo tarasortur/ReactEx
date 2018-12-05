@@ -1,60 +1,65 @@
 import React from 'react';
-import { Link, Router } from "@reach/router";
-export default class createTask extends React.Component {
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as taskActions from "./actions/taskActions";
+import List from "./listOfTasks";
+
+class createTask extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        tasks: {}
-    }
-    this.addTask = this.addTask.bind(this);
+        this.state = { tasks: { name: "", desc: "" } }
+        this.createTodoRow = this.createTodoRow.bind(this);
+        this.addTask = this.addTask.bind(this);
     }
 
-    addTask(){
-    
+    addTask() {
         var newTask = this.state.tasks;
-        newTask.name =this.refs.taskName.value;
+        newTask.name = this.refs.taskName.value;
         newTask.desc = this.refs.taskDesc.value;
-        this.setState({ tasks : newTask});
+        this.setState({ tasks: newTask });
+        console.log("NewTask added as  ", JSON.stringify(this.state.tasks));
+        this.refs.taskName.value = "";
+        this.refs.taskDesc.value = "";
 
-console.log(" new task is " , JSON.stringify(this.state.tasks));
+        this.props.actions.addTask(this.state.tasks);
     }
-
-//     buttonClick = () => {
-//         var browserHistory = Router.browserHistory; 
-//   this.setState({tasks : { ...this.state.tasks , name: document.getElementById('name').value } })
-//   this.setState({tasks : { ...this.state.tasks , desc: document.getElementById('desc').value } })
-//   console.log("state is " , this.state.tasks, browserHistory);
-  
-// }
+    createTodoRow(tasks, index) {
+        return (<div className="well" key={index}>{tasks.name}</div>)
+    }
 
     render() {
-          
+        var allTasks= this.props.tasks || {};
         return (
-            <form className="form-horizontal" >
+            <div>
+                <hr/>
                 <div className="form-group">
-                    <label className="control-label col-sm-2">Task Name:</label>
-                    <div className="col-sm-10">
-                        <input type="name" className="form-control" ref="taskName" id="name" placeholder="Task Name"></input>
-                    </div>
+                    <label htmlFor="taskName">Task</label>
+                    <input type="text" className="form-control" ref="taskName" id="taskName" placeholder="Task Name" />
                 </div>
                 <div className="form-group">
-                    <label className="control-label col-sm-2" >Task Description:</label>
-                    <div className="col-sm-10">
-                        <input type="name" className="form-control" ref="taskDesc" id="desc" placeholder="Task Description"></input>
-                    </div>
+                    <label htmlFor="taskDesc">Task Desc</label>
+                    <input type="text" className="form-control" ref="taskDesc" id="taskName" placeholder="Task Description" />
                 </div>
-                <div className="form-group">
-                    <div className="col-sm-offset-2 col-sm-10">
-                        <div className="checkbox">
-                            <label><input type="checkbox"></input>Yes!!! Remember me</label>
-                        </div>
-                    </div>
+                <button className="btn btn-primary" onClick={this.addTask}>Add Task</button>
+                <hr />
+                <div>
+                    <p>List of Tasks</p>
+                    {/* {this.props.tasks.map(this.createTodoRow)} */}
                 </div>
-                <div className="form-group">
-                    <div className="col-sm-offset-2 col-sm-10">
-                        <button type="submit" className="btn btn-default" onClick={this.addTask}>Create</button>
-                    </div>
-                </div>
-            </form>)
+                <hr/>
+                <List allTasks= {allTasks}/>
+
+            </div>);
     }
 }
+
+function mapStateToProps(state) {
+    console.log(`The state store is ${JSON.stringify(state)}`);
+    return { tasks: state.taskReducers };
+}
+
+function mapDispatchToProps(dispatch) {
+    return { actions: bindActionCreators(taskActions, dispatch) }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(createTask);
+
