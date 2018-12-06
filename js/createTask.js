@@ -40,7 +40,7 @@ class createTask extends React.Component {
                     <label htmlFor="taskDesc">Task Desc</label>
                     <input type="text" className="form-control" ref="taskDesc" id="taskName" placeholder="Task Description" />
                 </div>
-                <button className="btn btn-primary" onClick={this.addTask}>Add Task</button>
+                <button className="btn btn-success" onClick={this.addTask}>Add Task</button>
                 <hr />
                 <div>
                     <p>List of Tasks</p>
