@@ -6,6 +6,7 @@ import Store from "./store/appStore";
 import { Provider } from "react-redux";
 
 const store = Store();
+console.log("app storre is " ,store);
 
 ReactDOM.render(<Provider store={store}>
     <HomeComponent />

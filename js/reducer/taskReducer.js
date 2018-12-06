@@ -6,14 +6,27 @@ export default function (state = [], action) {
         case CONSTANTS.ADD_TASK:
             return [...state, Object.assign({}, action.task)];
             break;
-        // case CONSTANTS.DELETE_TASK:
-        //     return state;
-        //     break;  
+
         case CONSTANTS.DELETE_TASK:
-            let res=Object.assign({},...state);
-            delete res[action.task.name];
-            return res;
-            break;      
+            state.forEach((x) => {
+                if (x.name == action.taskName) {
+                    delete x.name;
+                    delete x.desc;
+                    x=undefined;
+                  }
+            })
+            return state;
+            break;
+
+        case CONSTANTS.EDIT_TASK:
+            state.forEach((x) => {
+                if (x.name == action.payload.name) {
+                    delete x.name;
+                    delete x.desc;}
+            })
+            return [...state];  
+            break;
+
         default:
             return state;
     }

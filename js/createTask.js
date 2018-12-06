@@ -8,8 +8,9 @@ class createTask extends React.Component {
     constructor(props) {
         super(props);
         this.state = { tasks: { name: "", desc: "" } }
-        this.createTodoRow = this.createTodoRow.bind(this);
+       // this.createTodoRow = this.createTodoRow.bind(this);
         this.addTask = this.addTask.bind(this);
+        // this.deleteTask = this.deleteTask.bind(this);
     }
 
     addTask() {
@@ -23,15 +24,18 @@ class createTask extends React.Component {
 
         this.props.actions.addTask(this.state.tasks);
     }
-    createTodoRow(tasks, index) {
-        return (<div className="well" key={index}>{tasks.name}</div>)
-    }
+
+    // {this.props.tasks.map(this.createTodoRow)}
+    // createTodoRow(tasks, index) {
+    //     (console.log("i m in unused function todo"));
+    //     return (<div className="well" key={index}>{tasks.name}</div>)
+    // }
 
     render() {
-        var allTasks= this.props.tasks || {};
+        var allTasks = this.props.tasks || {};
         return (
             <div>
-                <hr/>
+                <hr />
                 <div className="form-group">
                     <label htmlFor="taskName">Task</label>
                     <input type="text" className="form-control" ref="taskName" id="taskName" placeholder="Task Name" />
@@ -43,12 +47,10 @@ class createTask extends React.Component {
                 <button className="btn btn-success" onClick={this.addTask}>Add Task</button>
                 <hr />
                 <div>
-                    <p>List of Tasks</p>
-                    {/* {this.props.tasks.map(this.createTodoRow)} */}
+                    <h2>List of Tasks</h2>
+                    <hr />
+                    <List allTasks={allTasks} actions={this.props.actions} />
                 </div>
-                <hr/>
-                <List allTasks= {allTasks}/>
-
             </div>);
     }
 }
