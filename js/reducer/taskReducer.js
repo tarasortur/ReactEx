@@ -12,8 +12,8 @@ export default function (state = [], action) {
                 if (x.name == action.taskName) {
                     delete x.name;
                     delete x.desc;
-                    x=undefined;
-                  }
+                    x = undefined;
+                }
             })
             return state;
             break;
@@ -21,11 +21,20 @@ export default function (state = [], action) {
         case CONSTANTS.EDIT_TASK:
             state.forEach((x) => {
                 if (x.name == action.payload.name) {
-                    delete x.name;
-                    delete x.desc;}
+                    x.desc = action.payload.desc;
+                }
             })
-            return [...state];  
+            return [...state];
             break;
+
+        case CONSTANTS.RESET_TASK:
+            state.forEach((x) => {
+                if (x.name == action.payload.name) {
+                    x.desc = action.payload.desc;
+                }
+            })
+            return [...state];
+            break;    
 
         default:
             return state;

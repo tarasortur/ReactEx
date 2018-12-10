@@ -8,9 +8,7 @@ class createTask extends React.Component {
     constructor(props) {
         super(props);
         this.state = { tasks: { name: "", desc: "" } }
-       // this.createTodoRow = this.createTodoRow.bind(this);
         this.addTask = this.addTask.bind(this);
-        // this.deleteTask = this.deleteTask.bind(this);
     }
 
     addTask() {
@@ -18,18 +16,11 @@ class createTask extends React.Component {
         newTask.name = this.refs.taskName.value;
         newTask.desc = this.refs.taskDesc.value;
         this.setState({ tasks: newTask });
-        console.log("NewTask added as  ", JSON.stringify(this.state.tasks));
+        //console.log("NewTask added as  ", JSON.stringify(this.state.tasks));
         this.refs.taskName.value = "";
         this.refs.taskDesc.value = "";
-
         this.props.actions.addTask(this.state.tasks);
     }
-
-    // {this.props.tasks.map(this.createTodoRow)}
-    // createTodoRow(tasks, index) {
-    //     (console.log("i m in unused function todo"));
-    //     return (<div className="well" key={index}>{tasks.name}</div>)
-    // }
 
     render() {
         var allTasks = this.props.tasks || {};
