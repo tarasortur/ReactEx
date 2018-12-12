@@ -8,8 +8,7 @@ class HomePage extends React.Component {
   }
 
   render() {
-    return (<div><CreateTask/></div>)
+    return (<div><CreateTask /></div>)
   }
-
 }
 

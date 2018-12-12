@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as taskActions from "./actions/taskActions";
+import * as taskActions from "../actions/taskActions";
 import List from "./listOfTasks";
 
 class createTask extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { tasks: { name: "", desc: "" } }
+        this.state = { tasks: { name: "", desc: ""} }
         this.addTask = this.addTask.bind(this);
     }
 
