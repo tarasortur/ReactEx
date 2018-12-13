@@ -11,11 +11,10 @@ export default function (state = [], action) {
             state.forEach((x) => {
                 if (x.name == action.taskName) {
                     delete x.name;
-                    delete x.desc;
-                    x = undefined;
                 }
             })
-            return state;
+           var newState = state.filter((x)=>  x.hasOwnProperty('name')== true );
+            return [...newState];
             break;
 
         case CONSTANTS.EDIT_TASK:

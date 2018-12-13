@@ -16,7 +16,6 @@ class createTask extends React.Component {
         newTask.name = this.refs.taskName.value;
         newTask.desc = this.refs.taskDesc.value;
         this.setState({ tasks: newTask });
-        //console.log("NewTask added as  ", JSON.stringify(this.state.tasks));
         this.refs.taskName.value = "";
         this.refs.taskDesc.value = "";
         this.props.actions.addTask(this.state.tasks);
@@ -40,7 +39,7 @@ class createTask extends React.Component {
                 <div>
                     <h2>List of Tasks</h2>
                     <hr />
-                    <List allTasks={allTasks} actions={this.props.actions} />
+                    <List allTasks={allTasks}/>
                 </div>
             </div>);
     }

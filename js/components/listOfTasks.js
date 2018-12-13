@@ -10,14 +10,26 @@ export default class List extends React.Component {
     }
     render() {
         var self = this;
-        return (<Container>
-            {this.props.allTasks.map(function (task, index) {
-                return (<EditItem key={task.name + '_' + index} task={task}/>)
-            })}
-        </Container>);
+        return (<table className="table">
+                <thead>
+                    <tr>
+                        
+                        <th scope="col">Task Name</th>
+                        <th scope="col">Task Description</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" colSpan="2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.props.allTasks.map(function (task, index) {
+                        return ( <EditItem key={task.name + '_' + index} task={task}/>)
+                    })}
+                </tbody>
+            </table>
+        );
     }
 }
 
-List.propTypes = {
-    actions: PropTypes.object,
-}
+// List.propTypes = {
+//     actions: PropTypes.object,
+// }
