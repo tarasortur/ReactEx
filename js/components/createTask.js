@@ -3,12 +3,19 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as taskActions from "../actions/taskActions";
 import List from "./listOfTasks";
+// import DatePicker from "./datePicker";
+// import TimePicker from "./timePicker";
+import DateTimePicker from "./dateTimePicker";
 
 class createTask extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { tasks: { name: "", desc: ""} }
+        this.state = {
+            tasks: { name: "", desc: "" },
+            isChecked: false
+        };
         this.addTask = this.addTask.bind(this);
+        this.handleCheckbox = this.handleCheckbox.bind(this);
     }
 
     addTask() {
@@ -21,8 +28,14 @@ class createTask extends React.Component {
         this.props.actions.addTask(this.state.tasks);
     }
 
+    handleCheckbox(e) {
+        console.log(`Clicked on ${e.target.checked}`);
+        this.setState({ isChecked: !this.state.isChecked });
+    }
+
     render() {
         var allTasks = this.props.tasks || {};
+        var datePicker = this.state.isChecked ? <DateTimePicker /> : null;
         return (
             <div>
                 <hr />
@@ -34,12 +47,18 @@ class createTask extends React.Component {
                     <label htmlFor="taskDesc">Task Desc</label>
                     <input type="text" className="form-control" ref="taskDesc" id="taskName" placeholder="Task Description" />
                 </div>
+                <div className="form-group">
+                    <label className="checkbox-inline">
+                        <input type="checkbox" checked={this.state.isChecked} onChange={this.handleCheckbox} />Need a reminder??
+                    </label>
+                </div>
+                {datePicker}
                 <button className="btn btn-success" onClick={this.addTask}>Add Task</button>
                 <hr />
                 <div>
                     <h2>List of Tasks</h2>
                     <hr />
-                    <List allTasks={allTasks}/>
+                    <List allTasks={allTasks} />
                 </div>
             </div>);
     }
