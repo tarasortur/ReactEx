@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { Container, Row, Col } from 'reactstrap';
 import EditItem from "../components/editTask";
 
 export default class List extends React.Component {
@@ -28,3 +29,7 @@ export default class List extends React.Component {
         );
     }
 }
+
+// List.propTypes = {
+//     actions: PropTypes.object,
+// }

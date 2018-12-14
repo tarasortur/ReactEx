@@ -71,4 +71,4 @@ class EditItem extends React.Component {
 function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators(taskActions, dispatch) }
 }
-export default connect(null,mapDispatchToProps)(EditItem);
+export default connect(mapDispatchToProps)(EditItem);
