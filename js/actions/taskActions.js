@@ -16,3 +16,6 @@ export function resetTask(task) {
     return { type: CONSTANTS.RESET_TASK, payload: task }
 }
 
+export function addTaskStatus(status){
+    return { type : CONSTANTS.ADD_TASK_STATUS , payload : status}
+}
