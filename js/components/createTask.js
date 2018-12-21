@@ -1,42 +1,43 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Moment from "moment";
+
 import * as taskActions from "../actions/taskActions";
 import List from "./listOfTasks";
 import Button from "./button";
 import DateTimePicker from "./dateTimePicker";
 
+
 class createTask extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: { name: "", desc: "" },
+            tasks: { name: "", desc: "", time: "" , status:"" },
             isChecked: false
         };
         this.addTask = this.addTask.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
-        this.clearInputValues = this.clearInputValues.bind(this);
-        //this.passTask = this.passTask.bind(this);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
     }
 
-    // passTask() {
-    //     var newTask = this.state.tasks;
-    //     newTask.name = this.refs.taskName.value;
-    //     newTask.desc = this.refs.taskDesc.value;
-    //     this.setState({ tasks: newTask });
-    // }
+    handleTimeChange(moment) {
+        var newTaskStatus = this.state.tasks.time;
+        var x = moment._d.toString();
+        this.setState({ tasks:{ time : x } });
+    }
+
     addTask() {
         var newTask = this.state.tasks;
         newTask.name = this.refs.taskName.value;
         newTask.desc = this.refs.taskDesc.value;
-        this.setState({ tasks: newTask });
-       // this.props.actions.addTask(this.state.tasks);
-    }
+        newTask.time = this.state.tasks.time;
 
-    clearInputValues() {
+        this.setState({ tasks : newTask });
+        this.props.actions.addTask(this.state.tasks);
         this.refs.taskName.value = "";
         this.refs.taskDesc.value = "";
-        this.refs.dateTimePicker.value = "";
+        
     }
 
     handleCheckbox(e) {
@@ -47,26 +48,38 @@ class createTask extends React.Component {
     render() {
         var self = this;
         var allTasks = this.props.tasks || {};
-        var datePicker = this.state.isChecked ? <DateTimePicker /> : null;
+        var currentDate = Moment();
+        var yesterday = Moment().subtract(1, 'day');
+        var validDate = function (current) {
+            return current.isAfter(yesterday);
+        };
+        var validTime = {
+            hours: { min: currentDate._d.getHours() },
+            minutes: { min: (currentDate._d.getMinutes() + 10) },
+            seconds: { min: currentDate._d.getSeconds() }
+        };
         return (
             <div>
                 <hr />
                 <div className="form-group">
                     <label htmlFor="taskName">Task</label>
-                    <input type="text" className="form-control" ref="taskName" id="taskName" placeholder="Task Name" required />
+                    <input type="text" className="form-control" ref="taskName" id="taskName" placeholder="Task Name" required={true} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="taskDesc">Task Desc</label>
-                    <input type="text" className="form-control" ref="taskDesc" id="taskName" placeholder="Task Description"
-                        required />
+                    <input type="text" className="form-control" ref="taskDesc" id="taskName" placeholder="Task Description" required={true} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="reminder">Remind me</label>
-                    <DateTimePicker tasks={this.state.tasks} ref="dateTimePicker" />
+                    <DateTimePicker handleChange={this.handleTimeChange}
+                                    validDate={validDate}
+                                    validTime={validTime}
+                                    dateTimeDefValue={currentDate} />
                 </div>
-                <Button color='success' passedFunction={()=>self.addTask()} name='Add Task' />
+                <Button color='success' passedFunction={() => self.addTask()} name='Add Task' />
 
                 <hr />
+
                 <div>
                     <h2>List of Tasks</h2>
                     <hr />
@@ -78,7 +91,7 @@ class createTask extends React.Component {
 
 function mapStateToProps(state) {
     console.log(`The state store is ${JSON.stringify(state)}`);
-    return { tasks: state.taskReducers };
+    return { tasks : state.taskList };
 }
 
 function mapDispatchToProps(dispatch) {
